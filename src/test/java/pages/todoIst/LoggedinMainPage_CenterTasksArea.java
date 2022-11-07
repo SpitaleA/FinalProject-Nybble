@@ -15,6 +15,7 @@ public class LoggedinMainPage_CenterTasksArea {
     public Button confirmAddTaskbtn = new Button(By.xpath("//button[@data-testid=\"task-editor-submit-button\"]"), "Confirm add task button");
     public CheckBox checkBoxLastTask = new CheckBox(By.xpath("(//button//div[@class=\"task_checkbox__circle\"])[last()]"),"Last task checkbox");
     public Button tasks = new Button(By.xpath("//ul[@class=\"items\"]/li"),"Tasks displayed buttons");
+    public Button skipStart = new Button(By.xpath("//nav//button"));
 
     public Button selectTaskByName(String taskName){
         try {

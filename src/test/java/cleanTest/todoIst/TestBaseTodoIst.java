@@ -19,8 +19,10 @@ public class TestBaseTodoIst {
     protected String pwd = GetProperties.getInstance().getPwd();
 
     // PAGES
+    protected SettingsModal settingsModal = new SettingsModal();
     protected MainPage mainPage = new MainPage();
     protected LoginPage loginPage = new LoginPage();
+    protected RegisterPage registerPage = new RegisterPage();
     protected LoggedinMainPage_LeftPanelSection leftPanel = new LoggedinMainPage_LeftPanelSection();
     protected EditProjectModal editProjectModal = new EditProjectModal();
     protected LoggedinMainPage_Navbar loggedinMainPage_Navbar = new LoggedinMainPage_Navbar();
