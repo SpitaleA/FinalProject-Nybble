@@ -34,7 +34,6 @@ public class Watcher implements TestWatcher {
     public void testSuccessful(ExtensionContext context) {
         LOG.info("Test Successful for test {}: ");
         testResultsStatus.add(TestResultStatus.SUCCESSFUL);
-        Session.getInstance().closeBrowser();
     }
     @Override
     public void testAborted(ExtensionContext context, Throwable cause) {

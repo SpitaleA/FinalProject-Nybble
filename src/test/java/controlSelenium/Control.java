@@ -19,6 +19,7 @@ public class Control {
     protected WebElement control;
     protected String controlName; //reflection
     protected List<WebElement> controls = new ArrayList<>();
+    protected WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
 
     //********************              CONSTRUCTORS              ********************
     public Control (By locator){
@@ -113,38 +114,37 @@ public class Control {
     public void waitClickable()
     {
         // todo --> factory para instanciar el wait una sola vez
-        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(this.locator));
+        this.wait.until(ExpectedConditions.elementToBeClickable(this.locator));
     }
     /** Espera a que el control tenga dentro de un ATRIBUTO un texto especifico
      * @param attribute: es por ejemplo el CLASS en un elemento HTML
      * @param value: valor dentro del ATRIBUTO HTML
      */
     public void waitUntilElementHasHtmlAttribute(String attribute, String value){
-        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.attributeContains(this.locator,attribute,value));
+//        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        this.wait.until(ExpectedConditions.attributeContains(this.locator,attribute,value));
     }
     /** Espera a que el control tenga dentro de un ATRIBUTO un texto especifico
      */
     public void waitInvisibility(){
-        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(this.locator));
+//        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        this.wait.until(ExpectedConditions.invisibilityOfElementLocated(this.locator));
     }
     public void waitIFrameToBeSwitchable(){
         WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath("//iframe")));
     }
     public void waitVisibility(){
-        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(this.locator));
+//        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        this.wait.until(ExpectedConditions.visibilityOfElementLocated(this.locator));
     }
     public void waitSelectable(){
-        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeSelected(this.locator));
+//        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        this.wait.until(ExpectedConditions.elementToBeSelected(this.locator));
     }
     public void waitPresence(){
-        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.presenceOfElementLocated(this.locator));
+//        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        this.wait.until(ExpectedConditions.presenceOfElementLocated(this.locator));
     }
     /** Settea el attributo de la clase controls (que es un array de webelements)
      * y lo devuelve
