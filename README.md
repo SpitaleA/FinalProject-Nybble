@@ -15,4 +15,4 @@
 - gradle clean -x test -PenvFile=qa.properties tests
  Ejecuta los test con el @tag SmokeTest y settea 
  envFile el archivo qa.rpoperties
-- gradle clean test -PenvFile=qa.properties --tests "TestSuite1"
+- gradle clean test -PenvFile=qa.properties --tests "TestSuite1"# FinalProject-Nybble
