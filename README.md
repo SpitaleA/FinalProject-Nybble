@@ -16,3 +16,6 @@
  Ejecuta los test con el @tag SmokeTest y settea 
  envFile el archivo qa.rpoperties
 - gradle clean test -PenvFile=qa.properties --tests "TestSuite1"# FinalProject-Nybble
+
+# Browser devtool utils
+ - ctrl + shift + p : opens cmd for devtools

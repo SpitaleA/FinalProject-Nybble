@@ -4,13 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import singletonSession.Session;
-import utils.GetProperties;
 
 import java.util.Date;
 
 import static utils.RandomString.getAlphaNumericString;
 
-public class LoginTCs extends TestBaseTodoIst{
+public class AuthTcs extends TestBaseTodoIst{
 
     @Test
     public void register() throws InterruptedException {
@@ -50,6 +49,22 @@ public class LoginTCs extends TestBaseTodoIst{
     }
 
     @Test
+    public void logoutTest() throws InterruptedException {
+
+        //LOGIN
+        mainPage.loginButton.click();
+        loginPage.login(email ,pwd);
+
+        Assertions.assertTrue(loggedinMainPage_Navbar.addTask.isControlDisplayed(),"Error user was not logged correctly");
+
+        //LOGOUT
+        loggedinMainPage_Navbar.accountBtn.click();
+        loggedinMainPage_Navbar.logoutBtn.click();
+
+        Assertions.assertTrue(mainPage.loginButton.isControlDisplayed(),"ERROR user was not logged out");
+    }
+
+    @Test
     public void crudProject() throws InterruptedException {
 
     String projectName = "name " + new Date().getTime();
@@ -63,7 +78,7 @@ public class LoginTCs extends TestBaseTodoIst{
 
 
     //CREATE PROJECT
-        leftPanel.newProjectButton.click();
+        leftPanel_LeftPanelSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
 //        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
