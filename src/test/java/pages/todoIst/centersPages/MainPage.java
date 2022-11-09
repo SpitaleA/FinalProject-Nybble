@@ -1,4 +1,4 @@
-package pages.todoIst;
+package pages.todoIst.centersPages;
 
 import controlSelenium.Button;
 import org.openqa.selenium.By;

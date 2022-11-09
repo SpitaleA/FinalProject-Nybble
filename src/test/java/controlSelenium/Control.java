@@ -2,13 +2,14 @@ package controlSelenium;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import singletonSession.Session;
-import org.openqa.selenium.JavascriptExecutor;
+import utils.WaitUtil;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -17,10 +18,11 @@ import java.util.List;
 
 public class Control {
     protected By locator;
+
     protected WebElement control;
     protected String controlName; //reflection
     protected List<WebElement> controls = new ArrayList<>();
-    protected WebDriverWait waitInstance = SingletonWait.getInstance().getWebDriverWait();
+    protected WebDriverWait waitInstance = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
 
 
     //********************              CONSTRUCTORS              ********************
@@ -36,6 +38,7 @@ public class Control {
     public void step(String action){}
     protected void findControl(){
         control= Session.getInstance().getBrowser().findElement(this.locator);
+        controls = Session.getInstance().getBrowser().findElements(this.locator);
 //        controls = Session.getInstance().getBrowser().findElements(this.locator);
     }
 
@@ -67,8 +70,12 @@ public class Control {
         return this.control.getCssValue(style);
     }
     public Integer getControlsQuantity(){
-        this.findControl();
-        return this.controls.size()-1;
+        try {
+            this.findControl();
+            return this.controls.size();
+        } catch (Exception e){
+            return 0;
+        }
     }
 
     //********************              BOOLEANS              ********************
@@ -102,11 +109,59 @@ public class Control {
         Actions action = new Actions(Session.getInstance().getBrowser());
         action.moveToElement(this.control).perform();
     }
+    public void sendKeysAction(Keys keys){
+        this.findControl();
+        Actions action = new Actions(Session.getInstance().getBrowser());
+        action.sendKeys(keys)
+                .perform();
+    }
     public void sendKeysAction(String text){
         this.findControl();
         Actions action = new Actions(Session.getInstance().getBrowser());
         action.sendKeys(text)
                 .perform();
+    }
+    public void dragAndDrop(WebElement webElementTarget){
+        this.findControl();
+        Actions builder = new Actions(Session.getInstance().getBrowser());
+        //Building a drag and drop action
+        Action dragAndDrop = builder
+                .moveToElement(this.control)
+                .pause(Duration.ofSeconds(2))
+                .clickAndHold(this.control)
+                .moveByOffset(1, 1)
+                .pause(Duration.ofSeconds(2))
+                .moveToElement(webElementTarget)
+                .pause(Duration.ofSeconds(2))
+                .release(webElementTarget)
+                .pause(Duration.ofSeconds(2))
+                .build();
+
+
+        //Performing the drag and drop action
+        dragAndDrop.perform();
+    }
+    public void dragAndDropHardcore(WebElement webElementTarget,WebElement webElementTarget2){
+        this.findControl();
+        Actions builder = new Actions(Session.getInstance().getBrowser());
+        //Building a drag and drop action
+        Action dragAndDrop = builder
+                .moveToElement(this.control)
+                .pause(Duration.ofSeconds(2))
+                .clickAndHold(this.control)
+                .moveByOffset(100, 100)
+                .pause(Duration.ofSeconds(2))
+                .moveToElement(webElementTarget)
+                .pause(Duration.ofSeconds(2))
+                .moveToElement(webElementTarget2)
+                .pause(Duration.ofSeconds(2))
+                .release(webElementTarget2)
+                .pause(Duration.ofSeconds(2))
+                .build();
+
+
+        //Performing the drag and drop action
+        dragAndDrop.perform();
     }
 
     //********************              WAITS              ********************
@@ -118,14 +173,23 @@ public class Control {
         // todo --> factory para instanciar el wait una sola vez
         waitInstance.until(ExpectedConditions.elementToBeClickable(this.locator));
     }
+    public void waitAttributeDomValueToChange(String attribute, String value)
+    {
+        waitInstance.until(ExpectedConditions.not(ExpectedConditions.attributeContains(this.locator,attribute,value)));
+    }
     /** Espera a que el control tenga dentro de un ATRIBUTO un texto especifico
      * @param attribute: es por ejemplo el CLASS en un elemento HTML
      * @param value: valor dentro del ATRIBUTO HTML
      */
-    public void waitUntilElementHasHtmlAttribute(String attribute, String value){
+    public void waitUntilElementHasHtmlAttributeValue(String attribute, String value){
 //        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
         waitInstance.until(ExpectedConditions.attributeContains(this.locator,attribute,value));
     }
+    public void waitUrlToMatchRegexExpression(String regex){
+//        WebDriverWait wait = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+        waitInstance.until(ExpectedConditions.urlMatches("\\D*\\d{10}"));
+    }
+
     /** Espera a que el control tenga dentro de un ATRIBUTO un texto especifico
      */
     public void waitInvisibility(){
@@ -162,4 +226,11 @@ public class Control {
 
 
     }*/
+    public WebElement getControl(){
+        this.findControl();
+        return this.control;
+    }
+    public By getLocator(){
+        return this.locator;
+    }
 }
