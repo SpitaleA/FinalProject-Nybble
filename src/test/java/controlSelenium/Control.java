@@ -22,7 +22,7 @@ public class Control {
     protected WebElement control;
     protected String controlName; //reflection
     protected List<WebElement> controls = new ArrayList<>();
-    protected WebDriverWait waitInstance = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+    public static WebDriverWait waitInstance = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
 
 
     //********************              CONSTRUCTORS              ********************

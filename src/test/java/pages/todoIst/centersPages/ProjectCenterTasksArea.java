@@ -10,7 +10,7 @@ import static utils.ByUtils.getXpath;
 
 public class ProjectCenterTasksArea {
 
-    // BUTTONS
+    // **************************************** BUTTONS ****************************************
     public Button addTaskCenterBtn = new Button(By.xpath("//button[@class=\"plus_add_button\"]"),"Add task button");
     public Button dateSelectionWindowBtn = new Button(By.xpath("//button[@class=\"item_due_selector icon_pill\"]"),"Due date icon button");
     public Button sopenPriorityOptionsCombobox = new Button(By.xpath("//button[@class=\"item_action item_actions_priority\"]"),
@@ -27,6 +27,7 @@ public class ProjectCenterTasksArea {
     public Button setReminderForTaskBtn = new Button(By.xpath("//div[text()=\"Recordatorios\"]/.."));
 //    public Button updateToProBtn = new Button(By.xpath("//a[@href=\"/premium/upgrade\"]"));
     public Button deleteTaskOptionBtn = new Button(By.xpath("(//li//div[text()])[last()]/.."));
+    public Button closeWelcomeModalBtn = new Button(By.xpath("//button[@aria-label=\"Close modal\"]"));
 
     // **************************************** TEXTBOX ****************************************
     public TextBox titleTaskEditTextBox = new TextBox(By.xpath("//div[@class=\"notranslate public-DraftEditor-content\"]"),"Task name textbox");
@@ -34,12 +35,12 @@ public class ProjectCenterTasksArea {
     public TextBox sectionNameTextbox = new TextBox(By.xpath("//input[@class=\"name\"]"));
     public TextBox taskNameInSectionTextbox = new TextBox(By.cssSelector(".notranslate"));
 
-    // **************************************** CHECKBOX ****************************************
-    public CheckBox lastTaskCheckbox = new CheckBox(By.xpath("(//button//div[@class=\"task_checkbox__circle\"])[last()]"),"Last task checkbox");
 
     // **************************************** LABEL ****************************************
     public Label actualSectionDisplayedTitleLabel = new Label(By.xpath("//div[@id=\"editor\"]//h1/span[@class=\"simple_content\"]"));
 
+
+    // **************************************** FUNCTIONS ****************************************
     public CheckBox getCheckBoxFromTaskByName(String taskName){
         try {
             String taskXpath = getXpath(getTaskByName(taskName).getControl());
@@ -64,32 +65,34 @@ public class ProjectCenterTasksArea {
         Button taskDate = new Button(By.xpath(xpath +"/../../following-sibling::*//span[contains(@class,\"date\")]"));
         return taskDate;
     }
-    public Button selectTaskInPanelByName(String sectionName,String taskName){
+    public Button getTaskInSectionByName(String sectionName, String taskName){
         Button panelProjectTaskBtn = new Button(By.xpath(
                 "//span[text()=\""+ sectionName +"\"]//../../../..//following-sibling::div[@class=\"board_section__task_list\"]//div[text()=\""+ taskName +"\"]/../../../../.."));
         return panelProjectTaskBtn;
     }
 
-    public Button addTaskInPanelProjectByPanelName(String panelName){
+    public Button addTaskInSectionBySectionName(String sectionName){
         Button addTaskInPanelBtn = new Button(By.xpath(
-                "//header[@id]//span[@class=\"simple_content\" and text()=\"" + panelName+ "\"]/../../../../following-sibling::footer//button"));
+                "//header[@id]//span[@class=\"simple_content\" and text()=\"" + sectionName + "\"]/../../../../following-sibling::footer//button"));
         return addTaskInPanelBtn;
     }
     public Button findSectionByName(String sectionName){
         Button sectionByName = new Button(By.xpath("//header[@id]//span[@class='simple_content' and text()='"+ sectionName +"']"));
         return sectionByName;
     }
+    // todo --> si no uso estos 2 borrarlo
     public Button findSectionReleaseDragAreaBySectionName(String sectionName){
         String xpath = getXpath(findSectionByName(sectionName).getControl());
         Button releaseAreaSection = new Button(By.xpath(xpath + "/../../../../following-sibling::div/..//footer"));
         return releaseAreaSection;
     }
+
     public Button findSectionReleaseDragArea2BySectionName(String sectionName){
         String xpath = getXpath(findSectionReleaseDragAreaBySectionName(sectionName).getControl());
         Button releaseAreaSection2 = new Button(By.cssSelector(".releaseAreaSection"));
         return releaseAreaSection2;
     }
-    public Button setPriority(String priorityNumber){
+    public Button getPriorityButtonByNumber(String priorityNumber){
         Button prioritySet = new Button(By.xpath("//span[@class=\"priority_picker_item_name\" and text()=\"Prioridad " + priorityNumber +"\"]"),
                 "Priority " + priorityNumber + " button");
         return prioritySet;

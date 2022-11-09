@@ -5,12 +5,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import pages.todoIst.*;
 import pages.todoIst.centersPages.*;
-import pages.todoIst.modals.ArchiveProjectModal;
-import pages.todoIst.modals.DeleteTaskModal;
-import pages.todoIst.modals.EditProjectModal;
-import pages.todoIst.modals.EditTaskModal;
-import pages.todoIst.sections.LoggedinMainPage_LeftPanelSection;
-import pages.todoIst.sections.LoggedinMainPage_Navbar;
+import pages.todoIst.modals.*;
+import pages.todoIst.sections.SideBarSection;
+import pages.todoIst.sections.Navbar;
 import pages.todoIst.settings.SettingsModal;
 import singletonSession.Session;
 import utils.GetProperties;
@@ -45,13 +42,14 @@ public class TestBaseTodoIst {
 
     // PAGES
     protected LoadingPage loadingPage = new LoadingPage();
+    protected GetProModal getProModal = new GetProModal();
     protected SettingsModal settingsModal = new SettingsModal();
     protected MainPage mainPage = new MainPage();
     protected LoginPage loginPage = new LoginPage();
     protected RegisterPage registerPage = new RegisterPage();
-    protected LoggedinMainPage_LeftPanelSection loggedinMainPage_leftPanelSection = new LoggedinMainPage_LeftPanelSection();
+    protected SideBarSection sideBarSection = new SideBarSection();
     protected EditProjectModal editProjectModal = new EditProjectModal();
-    protected LoggedinMainPage_Navbar loggedinMainPage_Navbar = new LoggedinMainPage_Navbar();
+    protected Navbar navbar = new Navbar();
     protected ProjectCenterTasksArea project_CenterTasksArea = new ProjectCenterTasksArea();
     protected EditTaskModal editTaskModal = new EditTaskModal();
     protected DeleteTaskModal deleteTaskModal = new DeleteTaskModal();

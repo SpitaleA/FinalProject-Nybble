@@ -22,9 +22,9 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         loadingPage.loadingLabel.waitInvisibility();
 
         //GO TO INBOX SECTION
-        loggedinMainPage_leftPanelSection.inboxBtn.click();
+        sideBarSection.inboxBtn.click();
 
-        Assertions.assertTrue(loggedinMainPage_leftPanelSection.isInboxSelected(),"ERROR inbox is not selected");
+        Assertions.assertTrue(sideBarSection.isInboxSelected(),"ERROR inbox is not selected");
 
         //CREATE TASK
         project_CenterTasksArea.addTaskCenterBtn.click();
@@ -50,8 +50,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        numberOfProjectsBefore = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.favoriteCheckbox.waitClickable();
         editProjectModal.favoriteCheckbox.check();
@@ -59,8 +59,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         editProjectModal.setOptColorCombobox(ProjectCircleColors.blue).click();
         editProjectModal.addButton.waitClickable();
         editProjectModal.addButton.click();
-        loggedinMainPage_leftPanelSection.projectList.waitPresence();
-        numberOfProjectsAfter = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore + 1, numberOfProjectsAfter, "ERROR project was not created");
 
@@ -88,8 +88,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        numberOfProjectsBefore = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.favoriteCheckbox.waitClickable();
         editProjectModal.favoriteCheckbox.check();
@@ -97,13 +97,13 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         editProjectModal.setOptColorCombobox(ProjectCircleColors.blue).click();
         editProjectModal.addButton.waitClickable();
         editProjectModal.addButton.click();
-        loggedinMainPage_leftPanelSection.projectList.waitPresence();
-        numberOfProjectsAfter = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore + 1, numberOfProjectsAfter, "ERROR project was not created");
 
-        loggedinMainPage_Navbar.accountBtn.click();
-        loggedinMainPage_Navbar.logoutBtn.click();
+        navbar.accountBtn.click();
+        navbar.logoutOptBtn.click();
         Thread.sleep(3000);
     }
     @Test
@@ -119,12 +119,12 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        numberOfProjectsBefore = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-        loggedinMainPage_leftPanelSection.projectList.waitPresence();
-        numberOfProjectsAfter = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore + 1, numberOfProjectsAfter, "ERROR project was not created");
         Thread.sleep(3000);
@@ -147,12 +147,12 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        numberOfProjectsBefore = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-        loggedinMainPage_leftPanelSection.projectList.waitPresence();
-        numberOfProjectsAfter = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
@@ -161,7 +161,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.dateSelectionWindowBtn.click();
         project_CenterTasksArea.setDateTextBox.setText(date + Keys.ENTER);
         project_CenterTasksArea.sopenPriorityOptionsCombobox.click();
-        project_CenterTasksArea.setPriority("4").click();
+        project_CenterTasksArea.getPriorityButtonByNumber("4").click();
         project_CenterTasksArea.titleTaskEditTextBox.setTextnoClear(newTask);
         project_CenterTasksArea.confirmAddTaskbtn.waitClickable();
         project_CenterTasksArea.confirmAddTaskbtn.click();
@@ -195,16 +195,16 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        loggedinMainPage_leftPanelSection.projectList.waitPresence();
-        numberOfProjectsBefore = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-        loggedinMainPage_leftPanelSection.projectList.waitPresence();
-        numberOfProjectsAfter = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
-        loggedinMainPage_Navbar.accountBtn.waitUrlToMatchRegexExpression("a");
+        navbar.accountBtn.waitUrlToMatchRegexExpression("a");
 
         //CREATE TASK
         numberOfTasksBefore = project_CenterTasksArea.tasksList.getControlsQuantity();
@@ -219,7 +219,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.getTaskByName(newTask).waitClickable();
         project_CenterTasksArea.getTaskByName(newTask).makeRightClickAction();
         project_CenterTasksArea.deleteTaskOptionBtn.click();
-        project_CenterTasksArea.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.click();
 
         Assertions.assertTrue(project_CenterTasksArea.tasksList.getControlsQuantity()==1,"ERROR task was deleted");
         Thread.sleep(3000);
@@ -238,27 +238,27 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        loggedinMainPage_leftPanelSection.projectList.waitPresence();
-        numberOfProjectsBefore = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-        loggedinMainPage_leftPanelSection.projectList.waitPresence();
-        numberOfProjectsAfter = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
         //DELETE PROJECT
-        loggedinMainPage_leftPanelSection.opcProjectFindWithName(projectName).hoverAction();
-        loggedinMainPage_leftPanelSection.opcProjectFindWithName(projectName).waitClickable();
-        loggedinMainPage_leftPanelSection.opcProjectFindWithName(projectName).makeRightClickAction();
-        loggedinMainPage_leftPanelSection.deleteProjectBtn.waitClickable();
-        loggedinMainPage_leftPanelSection.deleteProjectBtn.click();
-        loggedinMainPage_leftPanelSection.projectList.waitVisibility();
-        loggedinMainPage_leftPanelSection.confirmDeleteBtn.click();
-        loggedinMainPage_leftPanelSection.confirmDeleteBtn.waitInvisibility();
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
 
-        numberOfProjectsAfter = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
         Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
 
     }
@@ -276,7 +276,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
 
@@ -287,7 +287,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.confirmAddTaskbtn.waitClickable();
         project_CenterTasksArea.confirmAddTaskbtn.click();
 
-        loggedinMainPage_Navbar.accountBtn.waitUrlToMatchRegexExpression("a");
+        navbar.accountBtn.waitUrlToMatchRegexExpression("a");
 
         Assertions.assertTrue(project_CenterTasksArea.tasksList.getControlsQuantity()==2,"ERROR task was not created");
 
@@ -319,7 +319,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
 
@@ -330,7 +330,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.confirmAddTaskbtn.waitClickable();
         project_CenterTasksArea.confirmAddTaskbtn.click();
 
-        loggedinMainPage_Navbar.accountBtn.waitUrlToMatchRegexExpression("a");
+        navbar.accountBtn.waitUrlToMatchRegexExpression("a");
 
         Assertions.assertTrue(project_CenterTasksArea.tasksList.getControlsQuantity()==2,"ERROR task was not created");
 
@@ -340,8 +340,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.getTaskByName(newTask).makeRightClickAction();
         project_CenterTasksArea.setReminderForTaskBtn.click();
 
-        Assertions.assertTrue(project_CenterTasksArea.updateToProBtn.isControlDisplayed(),"ERROR reminder is available");
-        Thread.sleep(5000);
+        Assertions.assertTrue(getProModal.updateToProBtn.isControlDisplayed(),"ERROR reminder is available");
+        Thread.sleep(3500);
 
     }
 
@@ -358,7 +358,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
 
@@ -369,7 +369,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.confirmAddTaskbtn.waitClickable();
         project_CenterTasksArea.confirmAddTaskbtn.click();
 
-        loggedinMainPage_Navbar.accountBtn.waitUrlToMatchRegexExpression("a");
+        navbar.accountBtn.waitUrlToMatchRegexExpression("a");
         WaitUtil.setDriver(Session.getInstance().getBrowser());
 //        WaitUtil.waitForAngularLoad();
 //        WaitUtil.waitForJQueryLoad();
@@ -404,21 +404,21 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         editTaskModal.closeModalBtn.waitClickable();
         editTaskModal.closeModalBtn.click();
 
-        loggedinMainPage_Navbar.accountBtn.waitClickable();
+        navbar.accountBtn.waitClickable();
         numberOfTasksAfter = project_CenterTasksArea.tasksList.getControlsQuantity();
         Assertions.assertEquals(numberOfTasksBefore+3,numberOfTasksAfter
                 ,"ERROR edit was not succesful");
 
 //        if (loggedinMainPage_Navbar.syncWaitIconBtn.isControlDisplayed())
 //            loggedinMainPage_Navbar.syncWaitIconBtn.waitInvisibility();
-        loggedinMainPage_leftPanelSection.projectMenu.waitClickable();
-        loggedinMainPage_leftPanelSection.projectMenu.click();
-        projectsMenu.searchActiveProjectsByName(projectName).waitVisibility();
-        loggedinMainPage_leftPanelSection.inboxBtn.click();
-        loggedinMainPage_leftPanelSection.inboxBtn.waitUrlToMatchRegexExpression("a");
-        loggedinMainPage_Navbar.accountBtn.click();
-        loggedinMainPage_Navbar.logoutBtn.waitClickable();
-        loggedinMainPage_Navbar.logoutBtn.click();
+        sideBarSection.projectMenuBtn.waitClickable();
+        sideBarSection.projectMenuBtn.click();
+        projectsMenu.findActiveProjectsByName(projectName).waitVisibility();
+        sideBarSection.inboxBtn.click();
+        sideBarSection.inboxBtn.waitUrlToMatchRegexExpression("a");
+        navbar.accountBtn.click();
+        navbar.logoutOptBtn.waitClickable();
+        navbar.logoutOptBtn.click();
     }
 
     @Test
@@ -432,7 +432,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
 //        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
@@ -455,9 +455,9 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         Assertions.assertEquals(priorityMap.get("priority3"),
-                project_CenterTasksArea.lastTaskCheckbox.getCssAttributeValue("color")
+                project_CenterTasksArea.getCheckBoxFromTaskByName(newTask).getCssAttributeValue("color")
                 ,"ERROR edit was not succesful");
-        Thread.sleep(5000);
+        Thread.sleep(3500);
     }
     @Test
     public void createProjectWithEmptyName() throws InterruptedException {
@@ -470,11 +470,11 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        projectsQuantityBefore = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        projectsQuantityBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText("");
         editProjectModal.addButton.click();
-        projectsQuantityAfter = loggedinMainPage_leftPanelSection.projectList.getControlsQuantity();
+        projectsQuantityAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(projectsQuantityBefore,projectsQuantityAfter,"ERROR an empty project was created");
 
@@ -489,7 +489,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
 //        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
@@ -514,7 +514,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
 //        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
@@ -526,8 +526,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.titleTaskEditTextBox.setTextnoClear(newTask);
         project_CenterTasksArea.confirmAddTaskbtn.waitClickable();
         project_CenterTasksArea.confirmAddTaskbtn.click();
-        if (loggedinMainPage_Navbar.syncWaitIconBtn.isControlDisplayed())
-            loggedinMainPage_Navbar.syncWaitIconBtn.waitInvisibility();
+        if (navbar.syncWaitIconBtn.isControlDisplayed())
+            navbar.syncWaitIconBtn.waitInvisibility();
 
 
         Assertions.assertTrue(project_CenterTasksArea.getTaskByName(newTask).isControlDisplayed() &&
@@ -552,7 +552,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
 //        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
@@ -565,10 +565,10 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         Assertions.assertTrue(project_CenterTasksArea.getTaskByName(tareaNueva).isControlDisplayed(),"ERROR no se creo la task");
 
-        loggedinMainPage_Navbar.searchBox.click();
-        loggedinMainPage_Navbar.searchBox.sendKeysAction(tareaNueva + Keys.ENTER);
+        navbar.searchBox.click();
+        navbar.searchBox.sendKeysAction(tareaNueva + Keys.ENTER);
 
-        Assertions.assertTrue(searchResults.search(tareaNueva).isControlDisplayed(),"ERROR task was not found");
+        Assertions.assertTrue(searchResults.findInSearchResults(tareaNueva).isControlDisplayed(),"ERROR task was not found");
 
         Thread.sleep(5000);
     }
@@ -586,7 +586,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
 //        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
@@ -600,10 +600,10 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         Assertions.assertTrue(project_CenterTasksArea.getTaskByName(newTask).isControlDisplayed(),"ERROR no se creo la task");
 
         project_CenterTasksArea.getTaskByName(newTask).hoverAction();
-        project_CenterTasksArea.dragTaskIconBtn.dragAndDrop(loggedinMainPage_leftPanelSection.inboxBtn.getControl());
+        project_CenterTasksArea.dragTaskIconBtn.dragAndDrop(sideBarSection.inboxBtn.getControl());
 
-        loggedinMainPage_leftPanelSection.inboxBtn.waitClickable();
-        loggedinMainPage_leftPanelSection.inboxBtn.click();
+        sideBarSection.inboxBtn.waitClickable();
+        sideBarSection.inboxBtn.click();
 
 //        if (loggedinMainPage_Navbar.syncWaitIconBtn.isControlDisplayed())
 //            loggedinMainPage_Navbar.syncWaitIconBtn.waitInvisibility();
@@ -624,32 +624,32 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         loginPage.login(email ,pwd);
         loadingPage.loadingLabel.waitInvisibility();
 
-        Assertions.assertTrue(loggedinMainPage_Navbar.addTask.isControlDisplayed(),"Error user was not logged correctly");
+        Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
         //CREATE PROJECT
-        numberOfProjectsBefore = loggedinMainPage_leftPanelSection.listaProyectos.getControlsQuantity();
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-        numberOfProjectsAfter = loggedinMainPage_leftPanelSection.listaProyectos.getControlsQuantity();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
-        loggedinMainPage_leftPanelSection.opcProjectFindWithName(projectName).makeRightClickAction();
-        loggedinMainPage_leftPanelSection.archivateProjectBtn.waitClickable();
-        loggedinMainPage_leftPanelSection.archivateProjectBtn.click();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.archivateOptBtn.waitClickable();
+        sideBarSection.archivateOptBtn.click();
         archiveProjectModal.confirmArchiveProjectBtn.click();
-        loggedinMainPage_leftPanelSection.projectMenu.waitClickable();
-        if (loggedinMainPage_Navbar.syncWaitIconBtn.isControlDisplayed())
-            loggedinMainPage_Navbar.syncWaitIconBtn.waitInvisibility();
-        loggedinMainPage_leftPanelSection.projectMenu.click();
-        projectsMenu.archivedProjectsTab.click();
-        projectsMenu.searchArchivedProjectsByName(projectName).waitClickable();
+        sideBarSection.projectMenuBtn.waitClickable();
+        if (navbar.syncWaitIconBtn.isControlDisplayed())
+            navbar.syncWaitIconBtn.waitInvisibility();
+        sideBarSection.projectMenuBtn.click();
+        projectsMenu.archivedProjectsTabBtn.click();
+        projectsMenu.findArchivedProjectsByName(projectName).waitClickable();
 
-        Assertions.assertTrue(projectsMenu.searchArchivedProjectsByName(projectName).isControlDisplayed(),"ERROR project was not archived");
+        Assertions.assertTrue(projectsMenu.findArchivedProjectsByName(projectName).isControlDisplayed(),"ERROR project was not archived");
 
-        loggedinMainPage_Navbar.accountBtn.click();
-        loggedinMainPage_Navbar.logoutBtn.click();
+        navbar.accountBtn.click();
+        navbar.logoutOptBtn.click();
 
     }
     @Test
@@ -664,14 +664,14 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         loginPage.login(email ,pwd);
         loadingPage.loadingLabel.waitInvisibility();
 
-        Assertions.assertTrue(loggedinMainPage_Navbar.addTask.isControlDisplayed(),"Error user was not logged correctly");
+        Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
         //CREATE PROJECT
-        numberOfProjectsBefore = loggedinMainPage_leftPanelSection.listaProyectos.getControlsQuantity();
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-        numberOfProjectsAfter = loggedinMainPage_leftPanelSection.listaProyectos.getControlsQuantity();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
@@ -700,14 +700,14 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         loginPage.login(email ,pwd);
         loadingPage.loadingLabel.waitInvisibility();
 
-        Assertions.assertTrue(loggedinMainPage_Navbar.addTask.isControlDisplayed(),"Error user was not logged correctly");
+        Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
         //CREATE PROJECT
-        numberOfProjectsBefore = loggedinMainPage_leftPanelSection.listaProyectos.getControlsQuantity();
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-        numberOfProjectsAfter = loggedinMainPage_leftPanelSection.listaProyectos.getControlsQuantity();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
@@ -721,7 +721,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.addSectionToPanelBtn.click();
         project_CenterTasksArea.sectionNameTextbox.setText("section2" + Keys.ENTER);
 
-        project_CenterTasksArea.addTaskInPanelProjectByPanelName("section1").click();
+        project_CenterTasksArea.addTaskInSectionBySectionName("section1").click();
         project_CenterTasksArea.taskNameInSectionTextbox.waitPresence();
         project_CenterTasksArea.taskNameInSectionTextbox.setTextnoClear("task1");
         project_CenterTasksArea.addTaskInSectionConfirmBtn.waitClickable();
@@ -734,7 +734,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
                         loggedinMainPage_CenterTasksArea.findSectionReleaseDragArea2BySectionName("section2").getControl());
         Thread.sleep(2000);*/
 
-        Assertions.assertTrue(project_CenterTasksArea.selectTaskInPanelByName("section1","task1").isControlDisplayed()
+        Assertions.assertTrue(project_CenterTasksArea.getTaskInSectionByName("section1","task1").isControlDisplayed()
                 ,"ERROR task was not moved");
         Thread.sleep(3500);
 //        loggedinMainPage_CenterTasksArea.changeViewBtn.click();
@@ -744,7 +744,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
     public void crudProject() throws InterruptedException {
 
         String projectName = "name " + new Date().getTime();
-        String tareaNueva = "task 1";
+        String newTask = "task 1";
 
 
         //LOGIN
@@ -754,7 +754,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        loggedinMainPage_leftPanelSection.newProjectButton.click();
+        sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
 //        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
@@ -764,16 +764,16 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.dateSelectionWindowBtn.click();
         project_CenterTasksArea.setDateTextBox.setText("24/10/22" + Keys.ENTER);
         project_CenterTasksArea.sopenPriorityOptionsCombobox.click();
-        project_CenterTasksArea.setPriority("4").click();
-        project_CenterTasksArea.titleTaskEditTextBox.setTextnoClear(tareaNueva);
+        project_CenterTasksArea.getPriorityButtonByNumber("4").click();
+        project_CenterTasksArea.titleTaskEditTextBox.setTextnoClear(newTask);
         project_CenterTasksArea.confirmAddTaskbtn.waitClickable();
         project_CenterTasksArea.confirmAddTaskbtn.click();
 
 
-        Assertions.assertTrue(project_CenterTasksArea.getTaskByName(tareaNueva).isControlDisplayed(),"ERROR no se creo la task");
+        Assertions.assertTrue(project_CenterTasksArea.getTaskByName(newTask).isControlDisplayed(),"ERROR no se creo la task");
 
         //EDIT TASK
-        project_CenterTasksArea.getTaskByName(tareaNueva).click();
+        project_CenterTasksArea.getTaskByName(newTask).click();
         editTaskModal.comboBoxPriorityBtn.click();
         editTaskModal.setPriority("3").click();
         editTaskModal.setDateBtn.click();
@@ -781,10 +781,10 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         editTaskModal.closeModalBtn.click();
 
 
-        Assertions.assertEquals(priorityMap.get("priority3"), project_CenterTasksArea.lastTaskCheckbox.getCssAttributeValue("color"),"ERROR edit was not succesful");
+        Assertions.assertEquals(priorityMap.get("priority3"), project_CenterTasksArea.getCheckBoxFromTaskByName(newTask).getCssAttributeValue("color"),"ERROR edit was not succesful");
 
         //DELETE TASK
-        project_CenterTasksArea.getTaskByName(tareaNueva).click();
+        project_CenterTasksArea.getTaskByName(newTask).click();
         editTaskModal.moreOptions.click();
         editTaskModal.deleteTaskBtn.waitPresence();
         editTaskModal.deleteTaskBtn.click();
@@ -794,7 +794,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 //        Assertions.assertEquals(numberOfTasksBefore,numberOfTasksAfter,"ERROR no se borro la tarea");
 
-        Thread.sleep(4000);
+        Thread.sleep(3500);
 
 
     }

@@ -13,7 +13,7 @@ public class SettingsTcs extends TestBaseTodoIst{
 
 
     @Test
-    public void testchagnepassword() throws InterruptedException {
+    public void changePassword() throws InterruptedException {
         String newName = getAlphaNumericString(6);
         String actualName;
 
@@ -22,17 +22,17 @@ public class SettingsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
 
-        Assertions.assertTrue(loggedinMainPage_Navbar.addTask.isControlDisplayed(),"Error user was not logged correctly");
+        Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
         //CHANGE NAME
-        loggedinMainPage_Navbar.accountBtn.click();
-        loggedinMainPage_Navbar.configurationBtn.click();
+        navbar.accountBtn.click();
+        navbar.configurationOptBtn.click();
         settingsModal.changePwd.click();
         settingsModal.newPwdTextbox.setTextnoClear("hola");
-        settingsModal.nameTextbox.setText(newName);
+        settingsModal.nameTextBox.setText(newName);
         settingsModal.updateConfigurationChangesBtn.click();
         settingsModal.closeModalBtn.click();
-        actualName = loggedinMainPage_Navbar.accountBtn.getAttributeValue("alt");
+        actualName = navbar.accountBtn.getAttributeValue("alt");
 
         Assertions.assertEquals(newName,actualName,"ERROR name was not changed correctly");
     }
@@ -46,14 +46,15 @@ public class SettingsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
 
-        Assertions.assertTrue(loggedinMainPage_Navbar.addTask.isControlDisplayed(),"Error user was not logged correctly");
+        Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
         //CHANGE LANGUAGE
         labelBeforeLanguageChange = project_CenterTasksArea.actualSectionDisplayedTitleLabel.getText();
-        loggedinMainPage_Navbar.accountBtn.click();
-        loggedinMainPage_Navbar.configurationBtn.click();
+        navbar.accountBtn.click();
+        navbar.configurationOptBtn.click();
         settingsModal.generalConfigBtn.click();
         settingsModal.languageComboboxBtn.click();
+        settingsModal.findLanguageBtn(Languages.Español).waitClickable();
         settingsModal.findLanguageBtn(Languages.Español).click();
         settingsModal.updateConfigurationChangesBtn.click();
         loadingPage.loadingLabel.waitInvisibility();
@@ -72,19 +73,20 @@ public class SettingsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
 
-        Assertions.assertTrue(loggedinMainPage_Navbar.addTask.isControlDisplayed(),"Error user was not logged correctly");
+        Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
         //CHANGE NAME
-        loggedinMainPage_Navbar.accountBtn.click();
-        loggedinMainPage_Navbar.configurationBtn.click();
-        settingsModal.nameTextbox.setText(newName);
+        navbar.accountBtn.click();
+        navbar.configurationOptBtn.click();
+        settingsModal.nameTextBox.click();
+        settingsModal.nameTextBox.setText(newName);
         settingsModal.updateConfigurationChangesBtn.click();
         settingsModal.closeModalBtn.click();
-        actualName = loggedinMainPage_Navbar.accountBtn.getAttributeValue("alt");
+        actualName = navbar.accountBtn.getAttributeValue("alt");
 
         Assertions.assertEquals(newName,actualName,"ERROR name was not changed correctly");
     }
-    @RepeatedTest(3)
+    @Test
     public void changeUIColors() throws InterruptedException {
         Random rand = new Random();
         String newColorTheme;
@@ -96,24 +98,28 @@ public class SettingsTcs extends TestBaseTodoIst{
         loginPage.login(email ,pwd);
         loadingPage.loadingLabel.waitInvisibility();
 
-        Assertions.assertTrue(loggedinMainPage_Navbar.addTask.isControlDisplayed(),"Error user was not logged correctly");
+        Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
-        //CHANGE NAME
-        colorThemeBefore = loggedinMainPage_Navbar.navbarColor.getCssAttributeValue("background-color");
+        //CHANGE THEME COLOR
+        colorThemeBefore = navbar.navbarColorLabel.getCssAttributeValue("background-color");
         themeColorsList.remove(colorThemeBefore);
-        loggedinMainPage_Navbar.accountBtn.click();
-        loggedinMainPage_Navbar.changeThemeBtn.click();
-
+        navbar.accountBtn.click();
+        navbar.changeThemeOptBtn.click();
         settingsModal.themesBtns.getControls().get(randNumber).click();
         settingsModal.updateConfigurationChangesBtn.click();
-        newColorTheme = loggedinMainPage_Navbar.navbarColor.getCssAttributeValue("background-color");
+        newColorTheme = navbar.navbarColorLabel.getCssAttributeValue("background-color");
+
         Assertions.assertEquals(themeColorsList.get(randNumber),newColorTheme,"ERROR theme color was not changed");
+
         settingsModal.closeModalBtn.click();
-        loggedinMainPage_Navbar.navbarColor.waitClickable();
-        if (loggedinMainPage_Navbar.syncWaitIconBtn.isControlDisplayed())
-            loggedinMainPage_Navbar.syncWaitIconBtn.waitInvisibility();
-        loggedinMainPage_Navbar.accountBtn.click();
-        loggedinMainPage_Navbar.logoutBtn.click();
+        navbar.navbarColorLabel.waitClickable();
+        if (navbar.syncWaitIconBtn.isControlDisplayed())
+            navbar.syncWaitIconBtn.waitInvisibility();
+        navbar.accountBtn.click();
+        navbar.logoutOptBtn.click();
+
+
+
         System.out.println("success");
         System.out.println(colorThemeBefore + " to " + newColorTheme);
     }
