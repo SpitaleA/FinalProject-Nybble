@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import singletonSession.Session;
 
-import static controlSelenium.Control.waitInstance;
 import static utils.RandomString.getAlphaNumericString;
 
 public class AuthTcs extends TestBaseTodoIst{
@@ -19,9 +18,12 @@ public class AuthTcs extends TestBaseTodoIst{
         registerPage.emailTextbox.setText(email);
         registerPage.pwdTextbox.setText(pwd);
         registerPage.registerBtn.click();
+        loadingPage.loadingLabel.waitInvisibility();
         project_CenterTasksArea.skipStart.click();
 
+
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not registred correctly");
+        Thread.sleep(3000);
     }
     @Test
     public void registerAndDeleteAccount() throws InterruptedException {
@@ -33,13 +35,13 @@ public class AuthTcs extends TestBaseTodoIst{
         registerPage.emailTextbox.setText(email);
         registerPage.pwdTextbox.setText(pwd);
         registerPage.registerBtn.click();
-
+        loadingPage.loadingLabel.waitInvisibility();
+        project_CenterTasksArea.skipStart.click();
+        project_CenterTasksArea.closeWelcomeModalBtn.click();
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not registred correctly");
 
         //DELETE ACCOUNT
-        project_CenterTasksArea.skipStart.click();
-        project_CenterTasksArea.closeWelcomeModalBtn.click();
         navbar.accountBtn.click();
         navbar.configurationOptBtn.click();
         settingsModal.deleteAccountBtn.click();
@@ -47,7 +49,7 @@ public class AuthTcs extends TestBaseTodoIst{
         settingsModal.confirmDeleteBtn.click();
 
         try {
-            waitInstance.until(ExpectedConditions.urlToBe("https://todoist.com/auth/account-deleted"));
+            navbar.accountBtn.waitInstance.until(ExpectedConditions.urlToBe("https://todoist.com/auth/account-deleted"));
             Assertions.assertTrue(true);
         }catch (Exception e){
             Assertions.assertEquals(false, "Error account was not deleted");
@@ -61,6 +63,7 @@ public class AuthTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
+        loadingPage.loadingLabel.waitInvisibility();
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
@@ -69,6 +72,7 @@ public class AuthTcs extends TestBaseTodoIst{
         navbar.logoutOptBtn.click();
 
         Assertions.assertTrue(mainPage.loginButton.isControlDisplayed(),"ERROR user was not logged out");
+        Thread.sleep(3000);
     }
 
 

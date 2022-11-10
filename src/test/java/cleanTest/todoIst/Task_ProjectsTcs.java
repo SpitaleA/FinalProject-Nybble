@@ -2,6 +2,7 @@ package cleanTest.todoIst;
 
 import enums.ProjectCircleColors;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import singletonSession.Session;
@@ -45,8 +46,9 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         //LOGIN
         mainPage.loginButton.click();
-        loginPage.login("agustin_spitale@hotmail.com", "Nybble12345");
-        loadingPage.loadingLabel.waitInvisibility();
+        loginPage.login(email, pwd);
+        errorLoginHandle();
+
 
 
         //CREATE PROJECT
@@ -72,11 +74,24 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         Assertions.assertTrue(project_CenterTasksArea.getTaskByName(newTask).isControlDisplayed(),"ERROR no se creo la task");
 
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitClickable();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
         Thread.sleep(3500);
     }
 
     @Test
-    public void CreateProject_WithColorAndAddFavorites() throws InterruptedException {
+    public void createProject_WithColorAndAddFavorites() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
         int numberOfProjectsBefore;
         int numberOfProjectsAfter;
@@ -101,6 +116,19 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore + 1, numberOfProjectsAfter, "ERROR project was not created");
+
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
 
         navbar.accountBtn.click();
         navbar.logoutOptBtn.click();
@@ -127,6 +155,19 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore + 1, numberOfProjectsAfter, "ERROR project was not created");
+
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
         Thread.sleep(3000);
     }
 
@@ -176,6 +217,18 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         Assertions.assertTrue(getPriorityColorFromTask.equals(priorityMap.get("priority4")) &&
                                 getDate.equals("Mañana")
                                 ,"ERROR task was created but not with wrong priority or date");
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
 
         Thread.sleep(3000);
     }
@@ -195,7 +248,6 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
-        sideBarSection.projectsListBtns.waitPresence();
         numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
@@ -204,7 +256,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
 
         Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
-        navbar.accountBtn.waitUrlToMatchRegexExpression("a");
+        navbar.accountBtn.waitUrlToMatchRegexExpression("");
 
         //CREATE TASK
         numberOfTasksBefore = project_CenterTasksArea.tasksList.getControlsQuantity();
@@ -212,6 +264,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.titleTaskEditTextBox.setTextnoClear(newTask+Keys.ENTER);
         project_CenterTasksArea.confirmAddTaskbtn.waitClickable();
         project_CenterTasksArea.confirmAddTaskbtn.click();
+        navbar.accountBtn.waitClickable();
 
         Assertions.assertTrue(project_CenterTasksArea.tasksList.getControlsQuantity()==2,"ERROR task was not created");
 
@@ -222,6 +275,20 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         deleteTaskModal.confirmDeleteBtn.click();
 
         Assertions.assertTrue(project_CenterTasksArea.tasksList.getControlsQuantity()==1,"ERROR task was deleted");
+
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
         Thread.sleep(3000);
     }
 
@@ -269,6 +336,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         String newTask = "task " + new Date().getTime();
         int numberOfTasksBefore;
         int numberOfTasksAfter;
+        int numberOfProjectsBefore;
+        int numberOfProjectsAfter;
 
         //LOGIN
         mainPage.loginButton.click();
@@ -276,9 +345,14 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+
+        Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
         //CREATE TASK
         numberOfTasksBefore = project_CenterTasksArea.tasksList.getControlsQuantity();
@@ -302,8 +376,20 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
             Assertions.assertTrue(false,"ERROR task was not checked");
         }
 
-//        Thread.sleep(5000);
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
 
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
+        Thread.sleep(3000);
     }
 
     @Test
@@ -312,16 +398,23 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         String newTask = "task " + new Date().getTime();
         int numberOfTasksBefore;
         int numberOfTasksAfter;
+        int numberOfProjectsBefore;
+        int numberOfProjectsAfter;
 
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
+        loadingPage.loadingLabel.waitInvisibility();
 
 
         //CREATE PROJECT
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+
+        Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
         //CREATE TASK
         numberOfTasksBefore = project_CenterTasksArea.tasksList.getControlsQuantity();
@@ -341,6 +434,23 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.setReminderForTaskBtn.click();
 
         Assertions.assertTrue(getProModal.updateToProBtn.isControlDisplayed(),"ERROR reminder is available");
+
+        getProModal.closeModalBtn.makeRightClickAction();
+        getProModal.closeModalBtn.click();
+
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
         Thread.sleep(3500);
 
     }
@@ -351,16 +461,22 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         String newTask = "task " + new Date().getTime();
         int numberOfTasksBefore;
         int numberOfTasksAfter;
+        int numberOfProjectsBefore;
+        int numberOfProjectsAfter;
 
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
-
+        loadingPage.loadingLabel.waitInvisibility();
 
         //CREATE PROJECT
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+
+        Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
         //CREATE TASK
         numberOfTasksBefore = project_CenterTasksArea.tasksList.getControlsQuantity();
@@ -370,34 +486,23 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.confirmAddTaskbtn.click();
 
         navbar.accountBtn.waitUrlToMatchRegexExpression("a");
-        WaitUtil.setDriver(Session.getInstance().getBrowser());
-//        WaitUtil.waitForAngularLoad();
-//        WaitUtil.waitForJQueryLoad();
-        WaitUtil.waitUntilJSReady();
-        WaitUtil.waitUntilAngularReady();
-        WaitUtil.waitUntilJQueryReady();
+        project_CenterTasksArea.tasksList.waitVisibility();
         Assertions.assertTrue(project_CenterTasksArea.tasksList.getControlsQuantity()==2,"ERROR task was not created");
-//        Thread.sleep(1000);
-        Session.getInstance().closeBrowser();
-//        Thread.sleep(4000);
+
+
         //EDIT TASK
         project_CenterTasksArea.getTaskByName(newTask).waitClickable();
         project_CenterTasksArea.getTaskByName(newTask).click();
         editTaskModal.comboBoxPriorityBtn.click();
         editTaskModal.setPriority("3").click();
-        editTaskModal.setDateBtn.click();
-        editTaskModal.setDateTextBox.setText("25/10/22" + Keys.ENTER);
         editTaskModal.addSubTaskBtn.waitClickable();
         editTaskModal.addSubTaskBtn.click();
-//        Thread.sleep(1000);
         editTaskModal.subtaskNameTextbox.waitPresence();
         editTaskModal.subtaskNameTextbox.setTextnoClear(" subtask 1");
-//        editTaskModal.subtaskNameTextbox.sendKeysAction(Keys.SPACE);
 
         editTaskModal.confirmAddSubTaskBtn.waitClickable();
         editTaskModal.confirmAddSubTaskBtn.click();
         editTaskModal.subtaskNameTextbox.waitPresence();
-//        editTaskModal.subtaskNameTextbox.sendKeysAction(Keys.SPACE);
         editTaskModal.subtaskNameTextbox.setTextnoClear(" subtask 2");
         editTaskModal.confirmAddSubTaskBtn.waitClickable();
         editTaskModal.confirmAddSubTaskBtn.click();
@@ -409,33 +514,47 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         Assertions.assertEquals(numberOfTasksBefore+3,numberOfTasksAfter
                 ,"ERROR edit was not succesful");
 
-//        if (loggedinMainPage_Navbar.syncWaitIconBtn.isControlDisplayed())
-//            loggedinMainPage_Navbar.syncWaitIconBtn.waitInvisibility();
         sideBarSection.projectMenuBtn.waitClickable();
-        sideBarSection.projectMenuBtn.click();
-        projectsMenu.findActiveProjectsByName(projectName).waitVisibility();
-        sideBarSection.inboxBtn.click();
-        sideBarSection.inboxBtn.waitUrlToMatchRegexExpression("a");
+
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
         navbar.accountBtn.click();
         navbar.logoutOptBtn.waitClickable();
         navbar.logoutOptBtn.click();
     }
 
     @Test
-    public void taskEdit() throws InterruptedException {
+    public void setPriorityInEditModalTask() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
         String newTask = "task " + new Date().getTime();
+        int numberOfProjectsBefore;
+        int numberOfProjectsAfter;
 
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
+        loadingPage.loadingLabel.waitInvisibility();
 
 
         //CREATE PROJECT
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-//        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+
+        Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
         //CREATE TASK
         project_CenterTasksArea.addTaskCenterBtn.click();
@@ -449,14 +568,25 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.getTaskByName(newTask).click();
         editTaskModal.comboBoxPriorityBtn.click();
         editTaskModal.setPriority("3").click();
-        editTaskModal.setDateBtn.click();
-        editTaskModal.setDateTextBox.setText("25/10/22" + Keys.ENTER);
         editTaskModal.closeModalBtn.click();
-
 
         Assertions.assertEquals(priorityMap.get("priority3"),
                 project_CenterTasksArea.getCheckBoxFromTaskByName(newTask).getCssAttributeValue("color")
                 ,"ERROR edit was not succesful");
+
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
         Thread.sleep(3500);
     }
     @Test
@@ -478,10 +608,13 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         Assertions.assertEquals(projectsQuantityBefore,projectsQuantityAfter,"ERROR an empty project was created");
 
+        Thread.sleep(2000);
     }
     @Test
     public void createTaskWithEmptyName() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
+        int numberOfProjectsBefore;
+        int numberOfProjectsAfter;
 
         //LOGIN
         mainPage.loginButton.click();
@@ -489,10 +622,14 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-//        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+
+        Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
         //CREATE TASK
         project_CenterTasksArea.addTaskCenterBtn.click();
@@ -501,12 +638,29 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.confirmAddTaskbtn.click();
 
         Assertions.assertTrue(project_CenterTasksArea.tasksList.getControlsQuantity()==1,"ERROR an empty task was created");
+
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
+        Thread.sleep(2000);
     }
     @Test
     public void createTaskWithPastDueDate() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
         String newTask = "task " + new Date().getTime();
         String pastDate = todayDate.minusDays(1).format(formatter);
+        int numberOfProjectsBefore;
+        int numberOfProjectsAfter;
 
         //LOGIN
         mainPage.loginButton.click();
@@ -514,10 +668,13 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-//        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+
+        Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
         //CREATE TASK
         project_CenterTasksArea.addTaskCenterBtn.click();
@@ -530,12 +687,26 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
             navbar.syncWaitIconBtn.waitInvisibility();
 
 
-        Assertions.assertTrue(project_CenterTasksArea.getTaskByName(newTask).isControlDisplayed() &&
-                project_CenterTasksArea.getTaskDateByName(newTask).getCssAttributeValue("color").equals(datesColors.get("overdueDate")),
+        Assertions.assertTrue(project_CenterTasksArea.getTaskByName(newTask).isControlDisplayed(),
                 "ERROR no se creo la task");
-
-
         System.out.println(project_CenterTasksArea.getTaskDateByName(newTask).getCssAttributeValue("color"));
+        Assertions.assertTrue(project_CenterTasksArea.getTaskDateByName(newTask).getCssAttributeValue("color").equals(datesColors.get("overdueDate")),
+                "ERROR task was created but the date was wrong setted");
+
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
+        Thread.sleep(2000);
 
 
     }
@@ -543,6 +714,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
     public void serachTask() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
         String tareaNueva = "task " + new Date().getTime();
+        int numberOfProjectsBefore;
+        int numberOfProjectsAfter;
 
 
         //LOGIN
@@ -552,9 +725,14 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
         //CREATE PROJECT
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+
+        Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 //        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
 
         //CREATE TASK
@@ -570,26 +748,44 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         Assertions.assertTrue(searchResults.findInSearchResults(tareaNueva).isControlDisplayed(),"ERROR task was not found");
 
-        Thread.sleep(5000);
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
+        Thread.sleep(2000);
     }
 
     @Test
     public void dragAndDropTask() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
         String newTask = "task " + new Date().getTime();
+        int numberOfProjectsBefore;
+        int numberOfProjectsAfter;
 
 
         //LOGIN
-
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
 
 
         //CREATE PROJECT
+        sideBarSection.projectsListBtns.waitPresence();
+        numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
-//        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+
+        Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
         //CREATE TASK
         project_CenterTasksArea.addTaskCenterBtn.click();
@@ -605,12 +801,22 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         sideBarSection.inboxBtn.waitClickable();
         sideBarSection.inboxBtn.click();
 
-//        if (loggedinMainPage_Navbar.syncWaitIconBtn.isControlDisplayed())
-//            loggedinMainPage_Navbar.syncWaitIconBtn.waitInvisibility();
-
         Assertions.assertEquals(newTask,inboxPage.findTaskByName(newTask).getText(),"ERROR task was not moved to inbox");
 
-        Thread.sleep(5000);
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
+        Thread.sleep(2000);
     }
 
     @Test
@@ -619,10 +825,10 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         int numberOfTasksBefore;
         int numberOfProjectsBefore;
         int numberOfProjectsAfter;
+
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
-        loadingPage.loadingLabel.waitInvisibility();
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
@@ -632,33 +838,38 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
         numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+//        navbar.accountBtn.waitUrlToMatchRegexExpression("");
 
         Assertions.assertEquals(numberOfProjectsBefore+1,numberOfProjectsAfter,"ERROR project was not created");
 
+        sideBarSection.findProjectByName(projectName).waitPresence();
         sideBarSection.findProjectByName(projectName).makeRightClickAction();
         sideBarSection.archivateOptBtn.waitClickable();
         sideBarSection.archivateOptBtn.click();
         archiveProjectModal.confirmArchiveProjectBtn.click();
+//        Thread.sleep(2000);
         sideBarSection.projectMenuBtn.waitClickable();
-        if (navbar.syncWaitIconBtn.isControlDisplayed())
-            navbar.syncWaitIconBtn.waitInvisibility();
         sideBarSection.projectMenuBtn.click();
         projectsMenu.archivedProjectsTabBtn.click();
-        projectsMenu.findArchivedProjectsByName(projectName).waitClickable();
+        projectsMenu.loadingIconLabel.waitInvisibility();
 
-        Assertions.assertTrue(projectsMenu.findArchivedProjectsByName(projectName).isControlDisplayed(),"ERROR project was not archived");
+        Session.getInstance().getBrowser().navigate().refresh();
+
+        Assertions.assertEquals(projectName,projectsMenu.findArchivedProjectsByName(projectName).getText(),"ERROR project was not archived");
+
+        Thread.sleep(2000);
 
         navbar.accountBtn.click();
         navbar.logoutOptBtn.click();
-
     }
     @Test
-    public void setProjectViewPanel(){
+    public void setProjectViewPanel() throws InterruptedException {
         String projectName = getAlphaNumericString(6);
         int numberOfTasksBefore;
         int numberOfProjectsBefore;
         int numberOfProjectsAfter;
-        String newTask = "task 1";
+        String newTask = "task " + new Date().getTime();
+
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
@@ -680,20 +891,35 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         project_CenterTasksArea.panelViewOptBtn.click();
 
         project_CenterTasksArea.openLayoutsOptBtn.sendKeysAction(Keys.ESCAPE);
-//        loggedinMainPage_CenterTasksArea.sectionNameTextbox.click();
-//        loggedinMainPage_CenterTasksArea.sectionNameTextbox.setText("section1" + Keys.ENTER);
 
         Assertions.assertTrue(project_CenterTasksArea.sectionNameTextbox.isControlDisplayed()
-                ,"ERROR task was not moved");
+                ,"ERROR project has not change the layout");
+
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitPresence();
+        deleteTaskModal.confirmDeleteBtn.click();
+        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
+        Thread.sleep(2000);
     }
 
     @Test
-    public void moveTasksInProjectPanelView() throws InterruptedException {
+    public void createTasksInProjectPanelView() throws InterruptedException {
         String projectName = getAlphaNumericString(6);
         int numberOfTasksBefore;
         int numberOfProjectsBefore;
         int numberOfProjectsAfter;
-        String newTask = "task 1";
+        String newTask = "task " + getAlphaNumericString(5);;
+        String section1 = "section " + getAlphaNumericString(5);
+        String section2 = "section " + getAlphaNumericString(5);
 
         //LOGIN
         mainPage.loginButton.click();
@@ -717,13 +943,13 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         project_CenterTasksArea.openLayoutsOptBtn.sendKeysAction(Keys.ESCAPE);
         project_CenterTasksArea.sectionNameTextbox.click();
-        project_CenterTasksArea.sectionNameTextbox.setText("section1" + Keys.ENTER);
+        project_CenterTasksArea.sectionNameTextbox.setText(section1 + Keys.ENTER);
         project_CenterTasksArea.addSectionToPanelBtn.click();
-        project_CenterTasksArea.sectionNameTextbox.setText("section2" + Keys.ENTER);
+        project_CenterTasksArea.sectionNameTextbox.setText(section2 + Keys.ENTER);
 
-        project_CenterTasksArea.addTaskInSectionBySectionName("section1").click();
+        project_CenterTasksArea.addTaskInSectionBySectionName(section1).click();
         project_CenterTasksArea.taskNameInSectionTextbox.waitPresence();
-        project_CenterTasksArea.taskNameInSectionTextbox.setTextnoClear("task1");
+        project_CenterTasksArea.taskNameInSectionTextbox.setTextnoClear(newTask);
         project_CenterTasksArea.addTaskInSectionConfirmBtn.waitClickable();
         project_CenterTasksArea.addTaskInSectionConfirmBtn.click();
 
@@ -734,13 +960,26 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
                         loggedinMainPage_CenterTasksArea.findSectionReleaseDragArea2BySectionName("section2").getControl());
         Thread.sleep(2000);*/
 
-        Assertions.assertTrue(project_CenterTasksArea.getTaskInSectionByName("section1","task1").isControlDisplayed()
-                ,"ERROR task was not moved");
-        Thread.sleep(3500);
-//        loggedinMainPage_CenterTasksArea.changeViewBtn.click();
+        Assertions.assertTrue(project_CenterTasksArea.getTaskInSectionByName(section1,newTask).isControlDisplayed()
+                ,"ERROR task in section1 was not created");
 
+        //DELETE PROJECT
+        sideBarSection.findProjectByName(projectName).hoverAction();
+        sideBarSection.findProjectByName(projectName).waitClickable();
+        sideBarSection.findProjectByName(projectName).makeRightClickAction();
+        sideBarSection.deleteProjectOptBtn.waitClickable();
+        sideBarSection.deleteProjectOptBtn.click();
+        sideBarSection.projectsListBtns.waitVisibility();
+        deleteTaskModal.confirmDeleteBtn.click();
+//        deleteTaskModal.confirmDeleteBtn.waitInvisibility();
+
+        numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
+
+        Thread.sleep(3500);
     }
     @Test
+    @Disabled
     public void crudProject() throws InterruptedException {
 
         String projectName = "name " + new Date().getTime();

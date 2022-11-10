@@ -19,8 +19,6 @@ public class Headless implements IBrowser{
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
 
-        //Maximizar ventana
-        driver.manage().window().maximize();
         return driver;
     }
 }

@@ -2,6 +2,7 @@ package cleanTest.todoIst;
 
 import enums.Languages;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,7 @@ public class SettingsTcs extends TestBaseTodoIst{
 
 
     @Test
+    @Disabled
     public void changePassword() throws InterruptedException {
         String newName = getAlphaNumericString(6);
         String actualName;
@@ -21,6 +23,7 @@ public class SettingsTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
+
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
@@ -45,9 +48,26 @@ public class SettingsTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
+        loadingPage.loadingLabel.waitInvisibility();
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
+        //CHANGE LANGUAGE
+        labelBeforeLanguageChange = project_CenterTasksArea.actualSectionDisplayedTitleLabel.getText();
+        navbar.accountBtn.click();
+        navbar.configurationOptBtn.click();
+        settingsModal.generalConfigBtn.click();
+        settingsModal.languageComboboxBtn.click();
+        settingsModal.findLanguageBtn(Languages.English).waitClickable();
+        settingsModal.findLanguageBtn(Languages.English).click();
+        settingsModal.updateConfigurationChangesBtn.click();
+        loadingPage.loadingLabel.waitInvisibility();
+        settingsModal.closeModalBtn.click();
+        labelAfterLanguageChange = project_CenterTasksArea.actualSectionDisplayedTitleLabel.getText();
+
+        Assertions.assertNotEquals(labelBeforeLanguageChange,labelAfterLanguageChange,"ERROR language was not changed");
+
+        //GO BACK TO THE ORGINAL LANGUAGE
         //CHANGE LANGUAGE
         labelBeforeLanguageChange = project_CenterTasksArea.actualSectionDisplayedTitleLabel.getText();
         navbar.accountBtn.click();
@@ -61,7 +81,7 @@ public class SettingsTcs extends TestBaseTodoIst{
         settingsModal.closeModalBtn.click();
         labelAfterLanguageChange = project_CenterTasksArea.actualSectionDisplayedTitleLabel.getText();
 
-        Assertions.assertNotEquals(labelBeforeLanguageChange,labelAfterLanguageChange,"ERROR language was not changed");
+        Assertions.assertNotEquals(labelBeforeLanguageChange,labelAfterLanguageChange,"ERROR language was not changed back to the orginal");
     }
     @Test
     public void changeUserName() throws InterruptedException {
@@ -85,8 +105,9 @@ public class SettingsTcs extends TestBaseTodoIst{
         actualName = navbar.accountBtn.getAttributeValue("alt");
 
         Assertions.assertEquals(newName,actualName,"ERROR name was not changed correctly");
+        Thread.sleep(3500);
     }
-    @Test
+    @RepeatedTest(3)
     public void changeUIColors() throws InterruptedException {
         Random rand = new Random();
         String newColorTheme;
@@ -95,6 +116,7 @@ public class SettingsTcs extends TestBaseTodoIst{
 
         //LOGIN
         mainPage.loginButton.click();
+        loginPage.loginButton.waitClickable();
         loginPage.login(email ,pwd);
         loadingPage.loadingLabel.waitInvisibility();
 
@@ -112,15 +134,9 @@ public class SettingsTcs extends TestBaseTodoIst{
         Assertions.assertEquals(themeColorsList.get(randNumber),newColorTheme,"ERROR theme color was not changed");
 
         settingsModal.closeModalBtn.click();
-        navbar.navbarColorLabel.waitClickable();
-        if (navbar.syncWaitIconBtn.isControlDisplayed())
-            navbar.syncWaitIconBtn.waitInvisibility();
-        navbar.accountBtn.click();
-        navbar.logoutOptBtn.click();
+        Thread.sleep(3500);
 
-
-
-        System.out.println("success");
-        System.out.println(colorThemeBefore + " to " + newColorTheme);
+//        System.out.println("success");
+//        System.out.println(colorThemeBefore + " to " + newColorTheme);
     }
 }

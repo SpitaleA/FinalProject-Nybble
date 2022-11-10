@@ -55,8 +55,10 @@ def tags = tasks.register("tags",Test) {
 
 
 
-/*allure {
+/*
+allure {
     version = '2.2.1'
     autoconfigure = true
-}*/
+}
+*/
 

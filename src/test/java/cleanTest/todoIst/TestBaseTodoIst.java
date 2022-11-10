@@ -29,11 +29,11 @@ public class TestBaseTodoIst {
         put("priority4", "rgba(128, 128, 128, 1)");
     }};
     protected HashMap<String, String> datesColors = new HashMap<String, String>(){{
-        put("overdueDate", "rgba(255, 112, 102, 1)");
-        put("todayDate", "rgba(37, 184, 76, 1)");
-        put("tomorrowDate", "rgb(255, 154, 20, 1)");
-        put("thisWeek", "rgba(169, 112, 255, 1)");
-        put("moreThanAWeek", "rgba(255, 255, 255, 0.6)");
+        put("overdueDate", "rgba(209, 69, 59, 1)");
+        put("todayDate", "rgba(5, 133, 39, 1)");
+        put("tomorrowDate", "rgba(173, 98, 0, 1)");
+        put("thisWeek", "rgba(105, 47, 194, 1)");
+        put("moreThanAWeek", "rgba(128, 128, 128, 1)");
     }};
     protected List<String> themeColorsList = new ArrayList<>(Arrays.asList("rgba(219, 76, 63, 1)", "rgba(61, 61, 61, 1)",
                                                             "rgba(40, 40, 40, 1)","rgba(247, 247, 247, 1)","rgba(255 ,144 ,0 ,1)"));
@@ -57,9 +57,19 @@ public class TestBaseTodoIst {
     protected ArchiveProjectModal archiveProjectModal = new ArchiveProjectModal();
     protected SearchResults searchResults = new SearchResults();
     protected InboxPage inboxPage = new InboxPage();
+    protected ErrorModal errorModal = new ErrorModal();
     protected DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
     protected LocalDate todayDate = LocalDate.now();
 
+    public void errorLoginHandle(){
+        if (errorModal.errorLabel.isControlDisplayed()){
+            errorModal.okBtn.waitClickable();
+            errorModal.okBtn.click();
+            mainPage.loginButton.click();
+            loginPage.login(email,pwd);
+            loadingPage.loadingLabel.waitInvisibility();
+        }
+    }
 
     @BeforeEach
     public void setup(){

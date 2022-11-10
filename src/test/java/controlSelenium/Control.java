@@ -22,7 +22,7 @@ public class Control {
     protected WebElement control;
     protected String controlName; //reflection
     protected List<WebElement> controls = new ArrayList<>();
-    public static WebDriverWait waitInstance = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+    public WebDriverWait waitInstance = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
 
 
     //********************              CONSTRUCTORS              ********************
@@ -233,4 +233,6 @@ public class Control {
     public By getLocator(){
         return this.locator;
     }
+
+
 }

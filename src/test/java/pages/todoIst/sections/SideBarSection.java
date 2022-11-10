@@ -19,7 +19,7 @@ public class SideBarSection {
         return new Button(By.cssSelector("#filter_inbox>div>div")).getCssAttributeValue("background-color").equals("rgba(238, 238, 238, 1)");
     }
     public Button findProjectByName(String projectName){
-        Button optionsProject = new Button(By.xpath("//a[contains(@aria-label,'" + projectName +"')]/following-sibling::div/button[contains(@type,'button')]"),
+        Button optionsProject = new Button(By.xpath("(//a[contains(@aria-label,'" + projectName +"')]/following-sibling::div/button[contains(@type,'button')])[last()]"),
                 "Options project with name " + projectName + " button");
         return optionsProject;
     }
