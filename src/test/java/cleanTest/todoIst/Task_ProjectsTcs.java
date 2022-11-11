@@ -30,6 +30,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com", "Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
         //GO TO INBOX SECTION
         sideBarSection.inboxBtn.click();
@@ -61,7 +63,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login(email, pwd);
-        errorLoginHandle();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
 
@@ -120,6 +123,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com", "Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -171,6 +176,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com", "Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -217,6 +224,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -283,6 +292,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -346,6 +357,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
         //CREATE PROJECT
         numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
@@ -390,6 +403,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -457,6 +472,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -525,6 +542,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
         //CREATE PROJECT
         numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
@@ -607,6 +626,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -665,6 +686,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -694,6 +717,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -744,6 +769,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -808,6 +835,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -866,6 +895,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
 
         //CREATE PROJECT
@@ -924,6 +955,9 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
+        loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
@@ -972,6 +1006,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
@@ -1028,6 +1064,8 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 

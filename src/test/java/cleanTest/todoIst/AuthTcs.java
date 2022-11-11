@@ -96,6 +96,8 @@ public class AuthTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 

@@ -18,7 +18,6 @@ import java.util.List;
 
 public class Control {
     protected By locator;
-
     protected WebElement control;
     protected String controlName; //reflection
     protected List<WebElement> controls = new ArrayList<>();
@@ -39,11 +38,9 @@ public class Control {
     protected void findControl(){
         control= Session.getInstance().getBrowser().findElement(this.locator);
         controls = Session.getInstance().getBrowser().findElements(this.locator);
-//        controls = Session.getInstance().getBrowser().findElements(this.locator);
     }
 
     public void click(){
-//        waitPresence();
         this.findControl();
         this.step("click on CONTROL " +controlName);
         control.click();
@@ -81,6 +78,17 @@ public class Control {
             this.step("Get controls quantity " + controlName);
             return 0;
         }
+    }
+    public WebElement getControl(){
+        this.findControl();
+        return this.control;
+    }
+    public By getLocator(){
+        return this.locator;
+    }
+
+    public WebDriverWait getWaitInstance() {
+        return waitInstance;
     }
 
     //********************              BOOLEANS              ********************
@@ -159,28 +167,6 @@ public class Control {
         dragAndDrop.perform();
         this.step("Action drag and drop from control " +controlName);
     }
-    public void dragAndDropHardcore(WebElement webElementTarget,WebElement webElementTarget2){
-        this.findControl();
-        Actions builder = new Actions(Session.getInstance().getBrowser());
-        //Building a drag and drop action
-        Action dragAndDrop = builder
-                .moveToElement(this.control)
-                .pause(Duration.ofSeconds(2))
-                .clickAndHold(this.control)
-                .moveByOffset(100, 100)
-                .pause(Duration.ofSeconds(2))
-                .moveToElement(webElementTarget)
-                .pause(Duration.ofSeconds(2))
-                .moveToElement(webElementTarget2)
-                .pause(Duration.ofSeconds(2))
-                .release(webElementTarget2)
-                .pause(Duration.ofSeconds(2))
-                .build();
-
-
-        //Performing the drag and drop action
-        dragAndDrop.perform();
-    }
 
     //********************              WAITS              ********************
 
@@ -188,7 +174,7 @@ public class Control {
      */
     public void waitClickable()
     {
-        // todo --> factory para instanciar el wait una sola vez
+        // todo --> factory para instanciar el wait
         waitInstance.until(ExpectedConditions.elementToBeClickable(this.locator));
     }
     public void waitAttributeDomValueToChange(String attribute, String value)
@@ -231,28 +217,4 @@ public class Control {
      */
 
 
-
-   /* public void waitControl(By locator, int timeOut) throws InterruptedException {
-        Label test= new Label(this.locator); // subject
-        int i = 0;
-        do{
-            Thread.sleep(1000);
-            i++;
-            this.control.click(); // refressh
-
-        }while (!test.isControlDisplayed() || i <= timeOut);
-
-
-    }*/
-    public WebElement getControl(){
-        this.findControl();
-        return this.control;
-    }
-    public By getLocator(){
-        return this.locator;
-    }
-
-    public WebDriverWait getWaitInstance() {
-        return waitInstance;
-    }
 }
