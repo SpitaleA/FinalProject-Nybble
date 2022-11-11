@@ -1,11 +1,14 @@
 package cleanTest.todoIst;
 
 import enums.ProjectCircleColors;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import io.qameta.allure.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.openqa.selenium.Keys;
 import singletonSession.Session;
+import utils.RunnerExtension;
 import utils.WaitUtil;
 
 import java.util.Date;
@@ -13,6 +16,12 @@ import java.util.Date;
 import static utils.RandomString.getAlphaNumericString;
 
 public class Task_ProjectsTcs extends TestBaseTodoIst{
+
+    @DisplayName("Verify a user can create a new task in inbox")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
     @Test
     public void createTaskInInbox() throws InterruptedException {
         String newTask = "task " + new Date().getTime();
@@ -37,6 +46,11 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         Thread.sleep(3500);
     }
+    @DisplayName("Verify a user can add a project to fauvorites and create a new task in it")
+    @Epic("Projects")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.NORMAL)
+    @Tag("SmokeTest")
     @Test
     public void createFavoriteProjectWithTask() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
@@ -57,8 +71,6 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.favoriteCheckbox.waitClickable();
         editProjectModal.favoriteCheckbox.check();
-        editProjectModal.colorCombobox.click();
-        editProjectModal.setOptColorCombobox(ProjectCircleColors.blue).click();
         editProjectModal.addButton.waitClickable();
         editProjectModal.addButton.click();
         sideBarSection.projectsListBtns.waitPresence();
@@ -90,11 +102,19 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         Thread.sleep(3500);
     }
 
-    @Test
-    public void createProject_WithColorAndAddFavorites() throws InterruptedException {
+    @DisplayName("Verify a user can create a new project with a different color and add it to fauvorites")
+    @Epic("Projects")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.NORMAL)
+    @Tag("SmokeTest")
+    @ParameterizedTest
+    @EnumSource(ProjectCircleColors.class)
+    public void createProject_WithColorAndAddFavorites(ProjectCircleColors projectCircleColor) throws InterruptedException {
         String projectName = "name " + new Date().getTime();
         int numberOfProjectsBefore;
         int numberOfProjectsAfter;
+        String defaultProjectCircleColor = "rgba(128, 128, 128, 1)";
+        String actualProjectCircleColor;
 
         //LOGIN
         mainPage.loginButton.click();
@@ -109,13 +129,15 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         editProjectModal.favoriteCheckbox.waitClickable();
         editProjectModal.favoriteCheckbox.check();
         editProjectModal.colorCombobox.click();
-        editProjectModal.setOptColorCombobox(ProjectCircleColors.blue).click();
+        editProjectModal.setOptColorCombobox(projectCircleColor).click();
         editProjectModal.addButton.waitClickable();
         editProjectModal.addButton.click();
         sideBarSection.projectsListBtns.waitPresence();
         numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
+        actualProjectCircleColor = sideBarSection.findProjectCircleByProjectName(projectName).getCssAttributeValue("color");
 
         Assertions.assertEquals(numberOfProjectsBefore + 1, numberOfProjectsAfter, "ERROR project was not created");
+        Assertions.assertNotEquals(defaultProjectCircleColor, actualProjectCircleColor, "ERROR project color was not setted correctly");
 
         //DELETE PROJECT
         sideBarSection.findProjectByName(projectName).hoverAction();
@@ -134,6 +156,11 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         navbar.logoutOptBtn.click();
         Thread.sleep(3000);
     }
+    @DisplayName("Verify a user can create a new project")
+    @Epic("Projects")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.BLOCKER)
+    @Tag("SmokeTest")
     @Test
     public void verifyUserCanCreateProject() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
@@ -171,7 +198,12 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         Thread.sleep(3000);
     }
 
-        @Test
+    @DisplayName("Verify a user can create a new task with priority 1 and due date for tomorrow")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
+    @Test
     public void createTaskWithPriorityAndDueDate() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
         String newTask = "task " + new Date().getTime();
@@ -189,6 +221,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         //CREATE PROJECT
         numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.hoverAction();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
@@ -233,6 +266,11 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         Thread.sleep(3000);
     }
 
+    @DisplayName("Verify a user can delete a task")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
     @Test
     public void deleteTask() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
@@ -292,6 +330,11 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         Thread.sleep(3000);
     }
 
+    @DisplayName("Verify a user can delete a project")
+    @Epic("Projects")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.BLOCKER)
+    @Tag("SmokeTest")
     @Test
     public void deleteProject() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
@@ -302,10 +345,9 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
-
+        loadingPage.loadingLabel.waitInvisibility();
 
         //CREATE PROJECT
-        sideBarSection.projectsListBtns.waitPresence();
         numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
@@ -330,6 +372,11 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
     }
 
+    @DisplayName("Verify a user can check a task")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.BLOCKER)
+    @Tag("SmokeTest")
     @Test
     public void checkingTask() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
@@ -342,10 +389,10 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
+        loadingPage.loadingLabel.waitInvisibility();
 
 
         //CREATE PROJECT
-        sideBarSection.projectsListBtns.waitPresence();
         numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
@@ -392,6 +439,11 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         Thread.sleep(3000);
     }
 
+    @DisplayName("Verify a normal user cant set a reminder for a task")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
     @Test
     public void verifySetReminderNotAvailable() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
@@ -455,8 +507,13 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
     }
 
+    @DisplayName("Verify a user can create  2 subtask in a task")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
     @Test
-    public void addSubTasks() throws InterruptedException {
+    public void add2SubTasks() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
         String newTask = "task " + new Date().getTime();
         int numberOfTasksBefore;
@@ -471,6 +528,7 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         //CREATE PROJECT
         numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
+        sideBarSection.newProjectButton.hoverAction();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
         editProjectModal.addButton.click();
@@ -487,10 +545,10 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         navbar.accountBtn.waitUrlToMatchRegexExpression("a");
         project_CenterTasksArea.tasksList.waitVisibility();
-        Assertions.assertTrue(project_CenterTasksArea.tasksList.getControlsQuantity()==2,"ERROR task was not created");
+        Assertions.assertEquals(2,project_CenterTasksArea.tasksList.getControlsQuantity(),"ERROR task was not created");
 
 
-        //EDIT TASK
+        //ADD SUBTASKS
         project_CenterTasksArea.getTaskByName(newTask).waitClickable();
         project_CenterTasksArea.getTaskByName(newTask).click();
         editTaskModal.comboBoxPriorityBtn.click();
@@ -529,11 +587,15 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         numberOfProjectsAfter = sideBarSection.projectsListBtns.getControlsQuantity();
         Assertions.assertEquals(numberOfProjectsBefore,numberOfProjectsAfter,"ERROR project was not deleted");
 
-        navbar.accountBtn.click();
-        navbar.logoutOptBtn.waitClickable();
-        navbar.logoutOptBtn.click();
+
+        Thread.sleep(3500);
     }
 
+    @DisplayName("Verify a user can edit priority in a new task")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
     @Test
     public void setPriorityInEditModalTask() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
@@ -589,6 +651,12 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         Thread.sleep(3500);
     }
+
+    @DisplayName("Verify a user can't create a new project with empty name")
+    @Epic("Projects")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
     @Test
     public void createProjectWithEmptyName() throws InterruptedException {
         int projectsQuantityBefore;
@@ -610,6 +678,12 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         Thread.sleep(2000);
     }
+
+    @DisplayName("Verify user can't create a task with empty name")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
     @Test
     public void createTaskWithEmptyName() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
@@ -619,10 +693,10 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
+        loadingPage.loadingLabel.waitInvisibility();
 
 
         //CREATE PROJECT
-        sideBarSection.projectsListBtns.waitPresence();
         numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
@@ -654,6 +728,11 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         Thread.sleep(2000);
     }
+    @DisplayName("Verify a user cant create a new task with a past due date")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
     @Test
     public void createTaskWithPastDueDate() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
@@ -710,6 +789,12 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
 
     }
+
+    @DisplayName("Verify a user can search for a task by task name")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.NORMAL)
+    @Tag("SmokeTest")
     @Test
     public void serachTask() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
@@ -722,10 +807,10 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
+        loadingPage.loadingLabel.waitInvisibility();
 
 
         //CREATE PROJECT
-        sideBarSection.projectsListBtns.waitPresence();
         numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
@@ -764,6 +849,11 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         Thread.sleep(2000);
     }
 
+    @DisplayName("Verify a user can drag and drop a task from a project to inbox")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
     @Test
     public void dragAndDropTask() throws InterruptedException {
         String projectName = "name " + new Date().getTime();
@@ -775,10 +865,10 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
+        loadingPage.loadingLabel.waitInvisibility();
 
 
         //CREATE PROJECT
-        sideBarSection.projectsListBtns.waitPresence();
         numberOfProjectsBefore = sideBarSection.projectsListBtns.getControlsQuantity();
         sideBarSection.newProjectButton.click();
         editProjectModal.inputProjectTextBox.setText(projectName);
@@ -819,6 +909,11 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         Thread.sleep(2000);
     }
 
+    @DisplayName("Verify a user can archivate a project")
+    @Epic("Projects")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.NORMAL)
+    @Tag("SmokeTest")
     @Test
     public void archivateProject() throws InterruptedException {
         String projectName = getAlphaNumericString(6);
@@ -859,9 +954,12 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         Thread.sleep(2000);
 
-        navbar.accountBtn.click();
-        navbar.logoutOptBtn.click();
     }
+    @DisplayName("Verify a user can set the project view to 'panel'")
+    @Epic("Projects")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
     @Test
     public void setProjectViewPanel() throws InterruptedException {
         String projectName = getAlphaNumericString(6);
@@ -911,6 +1009,11 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
         Thread.sleep(2000);
     }
 
+    @DisplayName("Verify a user can create tasks in a project with panel layout")
+    @Epic("Tasks")
+    @Feature("ProjectsAndTasks")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
     @Test
     public void createTasksInProjectPanelView() throws InterruptedException {
         String projectName = getAlphaNumericString(6);
@@ -978,63 +1081,5 @@ public class Task_ProjectsTcs extends TestBaseTodoIst{
 
         Thread.sleep(3500);
     }
-    @Test
-    @Disabled
-    public void crudProject() throws InterruptedException {
 
-        String projectName = "name " + new Date().getTime();
-        String newTask = "task 1";
-
-
-        //LOGIN
-
-        mainPage.loginButton.click();
-        loginPage.login("agustin_spitale@hotmail.com","Nybble12345");
-
-
-        //CREATE PROJECT
-        sideBarSection.newProjectButton.click();
-        editProjectModal.inputProjectTextBox.setText(projectName);
-        editProjectModal.addButton.click();
-//        numberOfTasksBefore = loggedinMainPage_CenterTasksArea.tasks.findControls();
-
-        //CREATE TASK
-        project_CenterTasksArea.addTaskCenterBtn.click();
-        project_CenterTasksArea.dateSelectionWindowBtn.click();
-        project_CenterTasksArea.setDateTextBox.setText("24/10/22" + Keys.ENTER);
-        project_CenterTasksArea.sopenPriorityOptionsCombobox.click();
-        project_CenterTasksArea.getPriorityButtonByNumber("4").click();
-        project_CenterTasksArea.titleTaskEditTextBox.setTextnoClear(newTask);
-        project_CenterTasksArea.confirmAddTaskbtn.waitClickable();
-        project_CenterTasksArea.confirmAddTaskbtn.click();
-
-
-        Assertions.assertTrue(project_CenterTasksArea.getTaskByName(newTask).isControlDisplayed(),"ERROR no se creo la task");
-
-        //EDIT TASK
-        project_CenterTasksArea.getTaskByName(newTask).click();
-        editTaskModal.comboBoxPriorityBtn.click();
-        editTaskModal.setPriority("3").click();
-        editTaskModal.setDateBtn.click();
-        editTaskModal.setDateTextBox.setText("25/10/22" + Keys.ENTER);
-        editTaskModal.closeModalBtn.click();
-
-
-        Assertions.assertEquals(priorityMap.get("priority3"), project_CenterTasksArea.getCheckBoxFromTaskByName(newTask).getCssAttributeValue("color"),"ERROR edit was not succesful");
-
-        //DELETE TASK
-        project_CenterTasksArea.getTaskByName(newTask).click();
-        editTaskModal.moreOptions.click();
-        editTaskModal.deleteTaskBtn.waitPresence();
-        editTaskModal.deleteTaskBtn.click();
-        deleteTaskModal.confirmDeleteBtn.click();
-
-//        numberOfTasksAfter = loggedinMainPage_CenterTasksArea.tasks.findControls();
-
-//        Assertions.assertEquals(numberOfTasksBefore,numberOfTasksAfter,"ERROR no se borro la tarea");
-
-        Thread.sleep(3500);
-
-
-    }
 }

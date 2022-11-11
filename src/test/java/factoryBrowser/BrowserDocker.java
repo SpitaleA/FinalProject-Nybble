@@ -16,9 +16,10 @@ public class BrowserDocker implements IBrowser {
         WebDriver driver;
         ChromeOptions capabilities = new ChromeOptions();
         try {
-            driver = new RemoteWebDriver(new URL("http://localhost:4444/"),capabilities);
+            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),capabilities);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
+            driver.manage().window().maximize();
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

@@ -10,7 +10,7 @@ buildscript {
 }
 
 apply plugin: 'java'
-//apply plugin: 'io.qameta.allure'
+apply plugin: 'io.qameta.allure'
 
 group 'org.example'
 version '1.0-SNAPSHOT'
@@ -55,10 +55,8 @@ def tags = tasks.register("tags",Test) {
 
 
 
-/*
 allure {
     version = '2.2.1'
     autoconfigure = true
 }
-*/
 

@@ -7,7 +7,8 @@ import org.openqa.selenium.By;
 
 public class SettingsModal {
     public Button deleteAccountBtn = new Button(By.xpath("//a[@href=\"/app/settings/account/delete\"]"),"Delete account button");
-    public Button changePwd = new Button(By.xpath("//a[@href=\"/app/settings/account/password\"]"));
+    public Button closeConfirmAccountPopUp = new Button(By.xpath("(//div[@data-testid=\"toaster\"]/div/div/div)[last()]/button"),"Close confirm email pop up");
+    public Button changePwd = new Button(By.xpath("//a[@href=\"/app/settings/account/password\"]"),"Change pwd button");
     public TextBox newPwdTextbox = new TextBox(By.xpath("//span[contains(text(),'Nueva')]/../../..//input"));
     public TextBox pwdDeleteTextbox = new TextBox(By.xpath("//input[@name]"),"Pwd for delete account textbox");
     public Button confirmDeleteBtn = new Button(By.xpath("//button[@type=\"submit\"]"),"Confirm account delete button");

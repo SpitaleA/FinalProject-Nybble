@@ -22,7 +22,7 @@ public class Control {
     protected WebElement control;
     protected String controlName; //reflection
     protected List<WebElement> controls = new ArrayList<>();
-    public WebDriverWait waitInstance = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
+    protected WebDriverWait waitInstance = new WebDriverWait(Session.getInstance().getBrowser(), Duration.ofSeconds(10));
 
 
     //********************              CONSTRUCTORS              ********************
@@ -59,21 +59,26 @@ public class Control {
     }
     public String getAttributeValue(String attribute){
         this.findControl();
+        this.step("Get attribute vale from " +controlName);
         return this.control.getAttribute(attribute);
     }
     public List<WebElement> getControls() {
         this.findControl();
+        this.step("Get list of webelements from " +controlName);
         return controls;
     }
     public String getCssAttributeValue(String style){
         this.findControl();
+        this.step("Get css attribute "+style + "from " + controlName);
         return this.control.getCssValue(style);
     }
     public Integer getControlsQuantity(){
         try {
             this.findControl();
+            this.step("Get controls quantity " + controlName);
             return this.controls.size();
         } catch (Exception e){
+            this.step("Get controls quantity " + controlName);
             return 0;
         }
     }
@@ -81,6 +86,7 @@ public class Control {
     //********************              BOOLEANS              ********************
     public boolean hasAttributeValue(String attribute,String value){
         this.findControl();
+        this.step("Control " +controlName + " has attribute value");
         return this.control.getAttribute(attribute).contains(value);
     }
     /** Verifica si el control en cuestion isDisplayed
@@ -103,23 +109,34 @@ public class Control {
         this.findControl();
         Actions action = new Actions(Session.getInstance().getBrowser());
         action.contextClick(this.control).perform();
+        this.step("Action right click on control " +controlName);
     }
     public void hoverAction(){
         this.findControl();
         Actions action = new Actions(Session.getInstance().getBrowser());
         action.moveToElement(this.control).perform();
+        this.step("Action hover over control " + controlName);
     }
     public void sendKeysAction(Keys keys){
         this.findControl();
         Actions action = new Actions(Session.getInstance().getBrowser());
         action.sendKeys(keys)
                 .perform();
+        this.step("Action send keys to control " +controlName);
     }
     public void sendKeysAction(String text){
         this.findControl();
         Actions action = new Actions(Session.getInstance().getBrowser());
         action.sendKeys(text)
                 .perform();
+        this.step("Action send keys to control " +controlName);
+    }
+    public void doubleClickAction(){
+        this.findControl();
+        Actions action = new Actions(Session.getInstance().getBrowser());
+        action.doubleClick(this.control)
+                .perform();
+        this.step("Action double click on control " +controlName);
     }
     public void dragAndDrop(WebElement webElementTarget){
         this.findControl();
@@ -140,6 +157,7 @@ public class Control {
 
         //Performing the drag and drop action
         dragAndDrop.perform();
+        this.step("Action drag and drop from control " +controlName);
     }
     public void dragAndDropHardcore(WebElement webElementTarget,WebElement webElementTarget2){
         this.findControl();
@@ -234,5 +252,7 @@ public class Control {
         return this.locator;
     }
 
-
+    public WebDriverWait getWaitInstance() {
+        return waitInstance;
+    }
 }

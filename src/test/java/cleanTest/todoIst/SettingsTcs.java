@@ -1,47 +1,25 @@
 package cleanTest.todoIst;
 
 import enums.Languages;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
-
-import java.util.Random;
+import io.qameta.allure.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static utils.RandomString.getAlphaNumericString;
 
 public class SettingsTcs extends TestBaseTodoIst{
 
 
-    @Test
-    @Disabled
-    public void changePassword() throws InterruptedException {
-        String newName = getAlphaNumericString(6);
-        String actualName;
-
-
-        //LOGIN
-        mainPage.loginButton.click();
-        loginPage.login(email ,pwd);
-
-
-        Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
-
-        //CHANGE NAME
-        navbar.accountBtn.click();
-        navbar.configurationOptBtn.click();
-        settingsModal.changePwd.click();
-        settingsModal.newPwdTextbox.setTextnoClear("hola");
-        settingsModal.nameTextBox.setText(newName);
-        settingsModal.updateConfigurationChangesBtn.click();
-        settingsModal.closeModalBtn.click();
-        actualName = navbar.accountBtn.getAttributeValue("alt");
-
-        Assertions.assertEquals(newName,actualName,"ERROR name was not changed correctly");
-    }
-
-    @Test
-    public void changePageLanguage() throws InterruptedException {
+    @DisplayName("Verify user can change the page language")
+    @Epic("General")
+    @Feature("Settings")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("SmokeTest")
+    @ParameterizedTest
+    @EnumSource(Languages.class)
+    public void changePageLanguage(Languages language) throws InterruptedException {
         String labelBeforeLanguageChange;
         String labelAfterLanguageChange;
 
@@ -49,6 +27,8 @@ public class SettingsTcs extends TestBaseTodoIst{
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
@@ -58,8 +38,8 @@ public class SettingsTcs extends TestBaseTodoIst{
         navbar.configurationOptBtn.click();
         settingsModal.generalConfigBtn.click();
         settingsModal.languageComboboxBtn.click();
-        settingsModal.findLanguageBtn(Languages.English).waitClickable();
-        settingsModal.findLanguageBtn(Languages.English).click();
+        settingsModal.findLanguageBtn(language).waitClickable();
+        settingsModal.findLanguageBtn(language).click();
         settingsModal.updateConfigurationChangesBtn.click();
         loadingPage.loadingLabel.waitInvisibility();
         settingsModal.closeModalBtn.click();
@@ -83,6 +63,10 @@ public class SettingsTcs extends TestBaseTodoIst{
 
         Assertions.assertNotEquals(labelBeforeLanguageChange,labelAfterLanguageChange,"ERROR language was not changed back to the orginal");
     }
+    @DisplayName("Verify user can change the user name")
+    @Epic("General")
+    @Feature("Settings")
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void changeUserName() throws InterruptedException {
         String newName = getAlphaNumericString(6);
@@ -92,6 +76,9 @@ public class SettingsTcs extends TestBaseTodoIst{
         //LOGIN
         mainPage.loginButton.click();
         loginPage.login(email ,pwd);
+        loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
@@ -107,36 +94,51 @@ public class SettingsTcs extends TestBaseTodoIst{
         Assertions.assertEquals(newName,actualName,"ERROR name was not changed correctly");
         Thread.sleep(3500);
     }
-    @RepeatedTest(3)
-    public void changeUIColors() throws InterruptedException {
-        Random rand = new Random();
+    @DisplayName("Verify user can change the UI colors theme")
+    @Epic("General")
+    @Feature("Settings")
+    @Severity(SeverityLevel.MINOR)
+    @Tag("SmokeTest")
+    @ParameterizedTest
+    @MethodSource("themeColorsList")
+    public void changeUIColors(String themeIterator,int testNumber) throws InterruptedException {
         String newColorTheme;
         String colorThemeBefore;
-        int randNumber = rand.nextInt(3);
+        String originalTheme;
 
         //LOGIN
         mainPage.loginButton.click();
         loginPage.loginButton.waitClickable();
         loginPage.login(email ,pwd);
         loadingPage.loadingLabel.waitInvisibility();
+        if (currentTimezoneModal.closeModal.isControlDisplayed())
+            currentTimezoneModal.closeModal.click();
 
         Assertions.assertTrue(navbar.addTaskBtn.isControlDisplayed(),"Error user was not logged correctly");
 
         //CHANGE THEME COLOR
-        colorThemeBefore = navbar.navbarColorLabel.getCssAttributeValue("background-color");
-        themeColorsList.remove(colorThemeBefore);
+        originalTheme = navbar.navbarColorLabel.getCssAttributeValue("background-color");
+        colorThemeBefore = originalTheme;
         navbar.accountBtn.click();
         navbar.changeThemeOptBtn.click();
-        settingsModal.themesBtns.getControls().get(randNumber).click();
+        settingsModal.themesBtns.getControls().get(testNumber).click();
         settingsModal.updateConfigurationChangesBtn.click();
         newColorTheme = navbar.navbarColorLabel.getCssAttributeValue("background-color");
 
-        Assertions.assertEquals(themeColorsList.get(randNumber),newColorTheme,"ERROR theme color was not changed");
+        Assertions.assertEquals(themeIterator,newColorTheme,"ERROR theme color was not changed");
 
         settingsModal.closeModalBtn.click();
+
+        //RETURN TO THE ORIGIAL THEME
+        navbar.accountBtn.click();
+        navbar.changeThemeOptBtn.click();
+        settingsModal.themesBtns.getControls().get(0).click();
+        settingsModal.updateConfigurationChangesBtn.click();
+        newColorTheme = navbar.navbarColorLabel.getCssAttributeValue("background-color");
+
+        Assertions.assertEquals(originalTheme,newColorTheme,"ERROR theme color was not changed to the original");
+
         Thread.sleep(3500);
 
-//        System.out.println("success");
-//        System.out.println(colorThemeBefore + " to " + newColorTheme);
     }
 }

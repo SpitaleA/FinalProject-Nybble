@@ -23,4 +23,10 @@ public class SideBarSection {
                 "Options project with name " + projectName + " button");
         return optionsProject;
     }
+    public Label findProjectCircleByProjectName(String projectName){
+        Label optionsProject = new Label(By.xpath("(//a[contains(@aria-label,\""+ projectName +"\")]/span/*)[last()]"),
+                "Options project with name " + projectName + " button");
+        return optionsProject;
+    }
+
 }
